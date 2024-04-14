@@ -5,6 +5,7 @@ import DynamicGreen from "./components/DynamicGreen.vue";
 import NumCount from "./components/NumCount.vue";
 import InputBind from "./components/InputBind.vue";
 import ConditionalRendering from "./components/ConditionalRendering.vue";
+import ListRendering from "./components/ListRendering.vue";
 </script>
 
 <template>
@@ -22,6 +23,8 @@ import ConditionalRendering from "./components/ConditionalRendering.vue";
   <input-bind></input-bind>
   <hr>
   <ConditionalRendering></ConditionalRendering>
+  <hr>
+  <list-rendering></list-rendering>
 
 
 </template>
