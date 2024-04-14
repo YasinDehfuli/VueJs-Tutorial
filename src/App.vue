@@ -6,6 +6,7 @@ import NumCount from "./components/NumCount.vue";
 import InputBind from "./components/InputBind.vue";
 import ConditionalRendering from "./components/ConditionalRendering.vue";
 import ListRendering from "./components/ListRendering.vue";
+import ComputedProperty from "./components/ComputedProperty.vue";
 </script>
 
 <template>
@@ -25,6 +26,9 @@ import ListRendering from "./components/ListRendering.vue";
   <ConditionalRendering></ConditionalRendering>
   <hr>
   <list-rendering></list-rendering>
+  <hr>
+  <computed-property></computed-property>
+  <hr>
 
 
 </template>
