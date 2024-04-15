@@ -1,34 +1,41 @@
 <script setup lang="ts">
-import {ref, onMounted, computed} from 'vue';
-import axios from 'axios';
+import {ref, onMounted, computed} from "vue";
+import axios from "axios";
 
 onMounted(() => {
   fetchTodos();
+  //TODO: add interval to fetch todos every 5s
 });
 
-const perPage = 10;
-let id = 0;
-let currentPage = ref(1);
+//TODO: clearInterval onUnmount
 
-const newTodo = ref('');
+const perPage = 10;
+const currentPage = ref<number>(1);
+
+// TODO: add type system
+const newTodo = ref("");
 const todoList = ref([]);
+
+const data = {};
+
 const totalPages = computed(() => Math.ceil(todoList.value.length / perPage));
 
 async function fetchTodos() {
   try {
-    const response = await axios.get('https://jsonplaceholder.typicode.com/todos');
-    todoList.value = response.data.slice(0, 200).map((todo) => ({
-      id: id++,
-      title: todo.title,
-    }));
+    const response = await axios.get(
+        "https://jsonplaceholder.typicode.com/todos",
+    );
+    todoList.value = response.data;
   } catch (error) {
-    console.error('Error fetching todos:', error);
+    // TODO: error handling
+    console.error("Error fetching todos:", error);
   }
 }
 
 function createTodo() {
-  todoList.value.push({id: id++, title: newTodo.value});
-  newTodo.value = '';
+  todoList.value.push({id: todoList.value.length + 1, title: newTodo.value});
+  newTodo.value = "";
+  console.log(todoList.value);
 }
 
 function removeTodo(todo) {
@@ -41,7 +48,7 @@ function goToPage(page) {
 
 function nextPage() {
   if (currentPage.value < totalPages.value) {
-    currentPage.value++;
+    currentPage.value = currentPage.value++;
   }
 }
 
@@ -56,17 +63,19 @@ const paginatedTodos = computed(() => {
   const end = start + perPage;
   return todoList.value.slice(start, end);
 });
-
 </script>
 
 <template>
   <form @submit.prevent="createTodo">
-    <input v-model="newTodo" placeholder="Add Todo">
+    <input v-model="newTodo"
+           placeholder="Add Todo"
+    />
     <button>Add Task</button>
   </form>
 
   <ol>
-    <li v-for="todo in paginatedTodos" :key="todo.id">
+    <li v-for="todo in paginatedTodos"
+        :key="todo.id">
       {{ todo.title }}
       <button @click="removeTodo(todo)">
         X
@@ -75,9 +84,13 @@ const paginatedTodos = computed(() => {
   </ol>
 
   <div>
-    <button @click="prevPage" :disabled="currentPage === 1">Prev</button>
+    <button
+        :disabled="currentPage === 1" @click="prevPage">Prev
+    </button>
     <span>{{ currentPage }} / {{ totalPages }}</span>
-    <button @click="nextPage" :disabled="currentPage === totalPages">Next</button>
+    <button :disabled="currentPage === totalPages" @click="nextPage">
+      Next
+    </button>
   </div>
 </template>
 
