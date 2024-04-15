@@ -1,29 +1,25 @@
 <script setup lang="ts">
-import {ref, onMounted, computed} from "vue";
+import { ref, onMounted, computed, onUnmounted } from "vue";
 import axios from "axios";
 
-onMounted(() => {
-  fetchTodos();
-  //TODO: add interval to fetch todos every 5s
-});
-
-//TODO: clearInterval onUnmount
-
-const perPage = 10;
+const perPage: number = 10;
 const currentPage = ref<number>(1);
+let interval: ReturnType<typeof setInterval> | undefined = undefined;
+
+type TodoItem = { id: number; title: string };
 
 // TODO: add type system
-const newTodo = ref("");
-const todoList = ref([]);
+const newTodo = ref<string>("");
+const todoList = ref<TodoItem[]>([]);
 
-const data = {};
-
-const totalPages = computed(() => Math.ceil(todoList.value.length / perPage));
+const totalPages = computed<number>(() =>
+  Math.ceil(todoList.value.length / perPage),
+);
 
 async function fetchTodos() {
   try {
     const response = await axios.get(
-        "https://jsonplaceholder.typicode.com/todos",
+      "https://jsonplaceholder.typicode.com/todos",
     );
     todoList.value = response.data;
   } catch (error) {
@@ -33,22 +29,18 @@ async function fetchTodos() {
 }
 
 function createTodo() {
-  todoList.value.push({id: todoList.value.length + 1, title: newTodo.value});
+  todoList.value.push({ id: todoList.value.length + 1, title: newTodo.value });
   newTodo.value = "";
-  console.log(todoList.value);
 }
 
-function removeTodo(todo) {
+function removeTodo(todo: TodoItem): void {
   todoList.value = todoList.value.filter((t) => t !== todo);
 }
 
-function goToPage(page) {
-  currentPage.value = page;
-}
-
 function nextPage() {
+  console.log(currentPage.value, totalPages.value);
   if (currentPage.value < totalPages.value) {
-    currentPage.value = currentPage.value++;
+    currentPage.value += 1;
   }
 }
 
@@ -63,30 +55,34 @@ const paginatedTodos = computed(() => {
   const end = start + perPage;
   return todoList.value.slice(start, end);
 });
+
+onMounted(() => {
+  fetchTodos();
+  interval = setInterval(fetchTodos, 5000);
+  //TODO: add interval to fetch todos every 5s ✅
+});
+
+onUnmounted(() => {
+  //TODO: clearInterval onUnmount 🚨
+  if (interval !== undefined) clearInterval(interval);
+});
 </script>
 
 <template>
   <form @submit.prevent="createTodo">
-    <input v-model="newTodo"
-           placeholder="Add Todo"
-    />
+    <input v-model="newTodo" placeholder="Add Todo" />
     <button>Add Task</button>
   </form>
 
   <ol>
-    <li v-for="todo in paginatedTodos"
-        :key="todo.id">
+    <li v-for="todo in paginatedTodos" :key="todo.id">
       {{ todo.title }}
-      <button @click="removeTodo(todo)">
-        X
-      </button>
+      <button @click="removeTodo(todo)">X</button>
     </li>
   </ol>
 
   <div>
-    <button
-        :disabled="currentPage === 1" @click="prevPage">Prev
-    </button>
+    <button :disabled="currentPage === 1" @click="prevPage">Prev</button>
     <span>{{ currentPage }} / {{ totalPages }}</span>
     <button :disabled="currentPage === totalPages" @click="nextPage">
       Next
