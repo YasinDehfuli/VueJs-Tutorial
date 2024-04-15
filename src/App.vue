@@ -10,6 +10,12 @@
 // import TodoListTask from "./components/todoListTask.vue";
 // import InputIrt from "./components/input-irt.vue";
 import TodoListTask from "./components/todoListTask.vue";
+import { ref } from "vue";
+
+const isVisible = ref<boolean>(true);
+function unVisible() {
+  isVisible.value = !isVisible.value;
+}
 </script>
 
 <template>
@@ -30,11 +36,8 @@ import TodoListTask from "./components/todoListTask.vue";
   <!--  <hr>-->
   <!--    <lifecycl-and-template-refs></lifecycl-and-template-refs>-->
   <!--  <input-irt></input-irt>-->
-  <todo-list-task></todo-list-task>
+  <todo-list-task v-if="isVisible"></todo-list-task>
+  <button @click="unVisible">onUnmounted Test</button>
 </template>
 
-<style scoped>
-
-
-
-</style>
+<style scoped></style>
