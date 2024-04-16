@@ -12,8 +12,7 @@
 // import InputIrt from "./components/input-irt.vue";
 // import TodoListTask from "./components/todoListTask.vue";
 // import VueEmit from "./components/VueEmit.vue";
-import VueSlot from "./components/VueSlot.vue";
-// import { ref } from "vue";
+import ButtonSlot from "./components/ButtonSlot.vue";
 // import VueProps from "./components/VueProps.vue";
 // import VueWatchers from "./components/VueWatchers.vue";
 
@@ -60,7 +59,11 @@ import VueSlot from "./components/VueSlot.vue";
   <!--  <p>-->
   <!--    {{ childMsg }}-->
   <!--  </p>-->
-  <vue-slot> </vue-slot>
+  <ButtonSlot>
+    <template #btn1> </template>
+    <template #btn2> </template>
+    <template #default></template>
+  </ButtonSlot>
 </template>
 
 <style scoped></style>
