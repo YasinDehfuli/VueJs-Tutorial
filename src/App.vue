@@ -9,13 +9,14 @@
 // import LifecyclAndTemplateRefs from "./components/LifecyclAndTemplateRefs.vue";
 // import TodoListTask from "./components/todoListTask.vue";
 // import InputIrt from "./components/input-irt.vue";
-import TodoListTask from "./components/todoListTask.vue";
-import { ref } from "vue";
+// import TodoListTask from "./components/todoListTask.vue";
+// import { ref } from "vue";
 
-const isVisible = ref<boolean>(true);
-function unVisible() {
-  isVisible.value = !isVisible.value;
-}
+// const isVisible = ref<boolean>(true);
+// function unVisible() {
+//   isVisible.value = !isVisible.value;
+// }
+import VueWatchers from "./components/VueWatchers.vue";
 </script>
 
 <template>
@@ -36,8 +37,9 @@ function unVisible() {
   <!--  <hr>-->
   <!--    <lifecycl-and-template-refs></lifecycl-and-template-refs>-->
   <!--  <input-irt></input-irt>-->
-  <todo-list-task v-if="isVisible"></todo-list-task>
-  <button @click="unVisible">onUnmounted Test</button>
+  <!--  <todo-list-task v-if="isVisible"></todo-list-task>-->
+  <!--  <button @click="unVisible">onUnmounted Test</button>-->
+  <VueWatchers></VueWatchers>
 </template>
 
 <style scoped></style>
