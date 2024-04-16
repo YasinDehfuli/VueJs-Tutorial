@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+// import { ref } from "vue";
 // import AppRefReactive from "./components/AppRefReactive.vue";
 // import DynamicGreen from "./components/DynamicGreen.vue";
 // import NumCount from "./components/NumCount.vue";
@@ -11,22 +11,27 @@ import { ref } from "vue";
 // import TodoListTask from "./components/todoListTask.vue";
 // import InputIrt from "./components/input-irt.vue";
 // import TodoListTask from "./components/todoListTask.vue";
-import VueEmit from "./components/VueEmit.vue";
+// import VueEmit from "./components/VueEmit.vue";
+import VueSlot from "./components/VueSlot.vue";
+// import { ref } from "vue";
 // import VueProps from "./components/VueProps.vue";
 // import VueWatchers from "./components/VueWatchers.vue";
 
 // const checkProps = ref<string>("GREETING FROM APP VUE");
-const childMsg = ref<string>("No Child Massage Here Yet!");
-
-const responseHandler = (text: string) => {
-  childMsg.value = text;
-};
+// const childMsg = ref<string>("No Child Massage Here Yet!");
+//
+// const responseHandler = (text: string) => {
+//   childMsg.value = text;
+// };
 
 // import { ref } from "vue";
 // const isVisible = ref<boolean>(true);
 // function unVisible() {
 //   isVisible.value = !isVisible.value;
 // }
+
+// ✨ Content inside the <slot> outlet will be treated as "fallback" content: it will be displayed if the parent did not pass down any slot content:
+// const msg = ref<string>("My Content massage For Slot");
 </script>
 
 <template>
@@ -51,10 +56,11 @@ const responseHandler = (text: string) => {
   <!--  <button @click="unVisible">onUnmounted Test</button>-->
   <!--  <VueWatchers></VueWatchers>-->
   <!--  <vue-props :msg="checkProps" />-->
-  <VueEmit @response="responseHandler" />
-  <p>
-    {{ childMsg }}
-  </p>
+  <!--  <VueEmit @response="responseHandler" />-->
+  <!--  <p>-->
+  <!--    {{ childMsg }}-->
+  <!--  </p>-->
+  <vue-slot> </vue-slot>
 </template>
 
 <style scoped></style>
