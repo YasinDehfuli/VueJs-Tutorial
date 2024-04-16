@@ -16,7 +16,11 @@
 // function unVisible() {
 //   isVisible.value = !isVisible.value;
 // }
-import VueWatchers from "./components/VueWatchers.vue";
+// import VueWatchers from "./components/VueWatchers.vue";
+import { ref } from "vue";
+import VueProps from "./components/VueProps.vue";
+
+const checkProps = ref<string>("GREETING FROM APP VUE");
 </script>
 
 <template>
@@ -39,7 +43,8 @@ import VueWatchers from "./components/VueWatchers.vue";
   <!--  <input-irt></input-irt>-->
   <!--  <todo-list-task v-if="isVisible"></todo-list-task>-->
   <!--  <button @click="unVisible">onUnmounted Test</button>-->
-  <VueWatchers></VueWatchers>
+  <!--  <VueWatchers></VueWatchers>-->
+  <vue-props :msg="checkProps" />
 </template>
 
 <style scoped></style>
