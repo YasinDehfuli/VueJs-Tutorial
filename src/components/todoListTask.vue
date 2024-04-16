@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, onUnmounted } from "vue";
-import axios from "axios";
+import { instance } from "../typescript/AxiosInstance.ts";
 
 const perPage: number = 10;
 const currentPage = ref<number>(1);
@@ -8,7 +8,7 @@ let interval: ReturnType<typeof setInterval> | undefined = undefined;
 
 type TodoItem = { id: number; title: string };
 
-// TODO: add type system
+// TODO: add type system ✅
 const newTodo = ref<string>("");
 const todoList = ref<TodoItem[]>([]);
 
@@ -17,15 +17,8 @@ const totalPages = computed<number>(() =>
 );
 
 async function fetchTodos() {
-  try {
-    const response = await axios.get(
-      "https://jsonplaceholder.typicode.com/todos",
-    );
-    todoList.value = response.data;
-  } catch (error) {
-    // TODO: error handling
-    console.error("Error fetching todos:", error);
-  }
+  const response = await instance.get("/todoss");
+  todoList.value = response.data;
 }
 
 function createTodo() {
@@ -59,11 +52,11 @@ const paginatedTodos = computed(() => {
 onMounted(() => {
   fetchTodos();
   interval = setInterval(fetchTodos, 5000);
-  //TODO: add interval to fetch todos every 5s ✅
+  // TODO: add interval to fetch todos every 5s ✅
 });
 
 onUnmounted(() => {
-  //TODO: clearInterval onUnmount 🚨
+  // TODO: clearInterval onUnmount ✅
   if (interval !== undefined) clearInterval(interval);
 });
 </script>
