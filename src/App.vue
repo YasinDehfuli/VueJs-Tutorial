@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from "vue";
 // import AppRefReactive from "./components/AppRefReactive.vue";
 // import DynamicGreen from "./components/DynamicGreen.vue";
 // import NumCount from "./components/NumCount.vue";
@@ -10,17 +11,22 @@
 // import TodoListTask from "./components/todoListTask.vue";
 // import InputIrt from "./components/input-irt.vue";
 // import TodoListTask from "./components/todoListTask.vue";
-// import { ref } from "vue";
+import VueEmit from "./components/VueEmit.vue";
+// import VueProps from "./components/VueProps.vue";
+// import VueWatchers from "./components/VueWatchers.vue";
 
+// const checkProps = ref<string>("GREETING FROM APP VUE");
+const childMsg = ref<string>("No Child Massage Here Yet!");
+
+const responseHandler = (text: string) => {
+  childMsg.value = text;
+};
+
+// import { ref } from "vue";
 // const isVisible = ref<boolean>(true);
 // function unVisible() {
 //   isVisible.value = !isVisible.value;
 // }
-// import VueWatchers from "./components/VueWatchers.vue";
-import { ref } from "vue";
-import VueProps from "./components/VueProps.vue";
-
-const checkProps = ref<string>("GREETING FROM APP VUE");
 </script>
 
 <template>
@@ -44,7 +50,11 @@ const checkProps = ref<string>("GREETING FROM APP VUE");
   <!--  <todo-list-task v-if="isVisible"></todo-list-task>-->
   <!--  <button @click="unVisible">onUnmounted Test</button>-->
   <!--  <VueWatchers></VueWatchers>-->
-  <vue-props :msg="checkProps" />
+  <!--  <vue-props :msg="checkProps" />-->
+  <VueEmit @response="responseHandler" />
+  <p>
+    {{ childMsg }}
+  </p>
 </template>
 
 <style scoped></style>
